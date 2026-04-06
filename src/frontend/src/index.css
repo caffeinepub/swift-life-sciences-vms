@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Brand Red #D32F2F -> oklch(0.45 0.20 27.3) */
+    --brand-red: 0.45 0.2 27.3;
+    /* Dark Red #B71C1C -> oklch(0.38 0.18 27.3) */
+    --brand-red-dark: 0.38 0.18 27.3;
+    /* Deep Red #8B0000 -> oklch(0.30 0.15 27.3) */
+    --brand-red-deep: 0.3 0.15 27.3;
+
+    --radius: 0.625rem;
+    --background: 0.974 0 0;
+    --foreground: 0.145 0 0;
+    --card: 1 0 0;
+    --card-foreground: 0.145 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.145 0 0;
+    --primary: 0.45 0.2 27.3;
+    --primary-foreground: 0.985 0 0;
+    --secondary: 0.97 0 0;
+    --secondary-foreground: 0.205 0 0;
+    --muted: 0.97 0 0;
+    --muted-foreground: 0.5 0 0;
+    --accent: 0.97 0 0;
+    --accent-foreground: 0.205 0 0;
+    --destructive: 0.45 0.2 27.3;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.922 0 0;
+    --input: 0.922 0 0;
+    --ring: 0.45 0.2 27.3;
+    --chart-1: 0.45 0.2 27.3;
+    --chart-2: 0.55 0.15 145;
+    --chart-3: 0.6 0.12 230;
+    --chart-4: 0.75 0.18 70;
+    --chart-5: 0.5 0.12 300;
+    --sidebar: 0.38 0.18 27.3;
+    --sidebar-foreground: 0.985 0 0;
+    --sidebar-primary: 0.985 0 0;
+    --sidebar-primary-foreground: 0.38 0.18 27.3;
+    --sidebar-accent: 0.42 0.17 27.3;
+    --sidebar-accent-foreground: 0.985 0 0;
+    --sidebar-border: 0.42 0.17 27.3;
+    --sidebar-ring: 0.985 0 0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", "DM Sans", system-ui, -apple-system,
+      sans-serif;
+  }
+}
+
+/* =====================================================
+   PRINT STYLES — A4 Half-Page Pass Layout
+   2 passes fit on one A4 landscape sheet
+   ===================================================== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar,
+  .app-header {
+    display: none !important;
+  }
+
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* A4 half-page: 148mm wide (half of A4 landscape 297mm) */
+  .pass-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    width: 148mm !important;
+    max-width: 148mm !important;
+    font-size: 9pt !important;
+    page-break-after: always;
+    border-radius: 0 !important;
+  }
+
+  .pass-card table td,
+  .pass-card table th {
+    font-size: 8pt !important;
+    padding: 2px 5px !important;
+  }
+
+  .pass-card h2 {
+    font-size: 11pt !important;
+  }
+
+  .pass-card h3 {
+    font-size: 10pt !important;
+  }
+
+  /* 2-up grid for printing two passes side by side on A4 landscape */
+  .print-2up {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8mm;
+    width: 210mm;
+    page-break-inside: avoid;
+  }
+
+  .print-2up .pass-card {
+    page-break-after: auto;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Camera video mirror */
+.camera-mirror {
+  transform: scaleX(-1);
+}
+
+/* Barcode styles */
+.barcode-bar {
+  display: inline-block;
+  height: 40px;
+  background: #000;
+}
+
+/* Digital signature — professional authorization box */
+.digital-signature {
+  border: 1px solid #d32f2f;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: inline-block;
+  background: rgba(211, 47, 47, 0.03);
+}
+
+.digital-signature .sig-label {
+  color: #d32f2f;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.digital-signature .sig-text {
+  font-style: italic;
+  font-size: 11px;
+  color: #333;
+}
+
+.digital-signature .sig-verified {
+  color: #2e7d32;
+  font-size: 9px;
+  font-weight: 600;
+  margin-top: 2px;
+  display: block;
+}
