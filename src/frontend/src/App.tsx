@@ -342,13 +342,19 @@ export default function App() {
 
   // Admin user handlers
   const handleCreateUser = (user: AppUser) => {
-    setUsers((prev) => [...prev, user]);
+    setUsers((prev) => {
+      const updated = [...prev, user];
+      saveToStorage(DB_KEYS.USERS, updated);
+      return updated;
+    });
   };
 
   const handleUpdateUser = (id: string, updates: Partial<AppUser>) => {
-    setUsers((prev) =>
-      prev.map((u) => (u.id === id ? { ...u, ...updates } : u)),
-    );
+    setUsers((prev) => {
+      const updated = prev.map((u) => (u.id === id ? { ...u, ...updates } : u));
+      saveToStorage(DB_KEYS.USERS, updated);
+      return updated;
+    });
   };
 
   // Return/Repair handlers
